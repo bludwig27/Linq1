@@ -36,28 +36,38 @@ namespace Linq1
                 new famousPeople() {Name = "Bill Gates", BirthYear=1955 }
         };
 
-            Console.WriteLine("People with birthdates after 1900:");
-            var myLinq1 = stemPeople.Where(s => s.BirthYear > 1899);
+Console.WriteLine("People with birthdates after 1900:");
+            var myLinq1 = from s in stemPeople
+                          where s.BirthYear > 1899
+                          select s;
             foreach(var m in myLinq1) Console.WriteLine(m.Name);
             Console.WriteLine();
             Console.WriteLine("People with two 'l's in their name:");
-            var myLinq2 = stemPeople.Where(s => s.Name.Contains("ll"));
+            var myLinq2 = from s in stemPeople
+                          where s.Name.Contains("ll")
+                          select s;
             foreach(var m in myLinq2) Console.WriteLine(m.Name);
             Console.WriteLine();
-            var myLinq3 = stemPeople.Count(s => s.BirthYear > 1949);
-            Console.WriteLine($"{myLinq3} people were born in 1950 or later.");
+            var myLinq3 = from s in stemPeople
+                          where s.BirthYear > 1949
+                          select s;
+            Console.WriteLine($"{myLinq3.Count()} people were born in 1950 or later.");
             Console.WriteLine();
-            var myLinq4 = stemPeople.Where(s => s.BirthYear > 1919 && s.BirthYear < 2001).OrderBy(s=>s.BirthYear);
             Console.WriteLine("People who were born between 1920 and 2000, sorted by birth year:");
+            var myLinq4 = from s in stemPeople
+                          where(s.BirthYear > 1919 && s.BirthYear < 2001)
+                          orderby s.BirthYear
+                          select s;
             foreach (var m in myLinq4) Console.WriteLine(m.Name);
-            int number4 = myLinq4.Count();
-            Console.WriteLine($"{number4} people are on this list.");
+            Console.WriteLine($"{myLinq4.Count()} people are on this list.");
             Console.WriteLine();
             Console.WriteLine("Finally, people who died between 1960 and 2015, sorted by name:");
-            var myLinq5 = stemPeople.Where(s => s.DeathYear > 1959 && s.DeathYear < 2016).OrderBy(s => s.Name);
+            var myLinq5 = from s in stemPeople
+                          where s.DeathYear > 1959 && s.DeathYear < 2016
+                          orderby s.Name
+                          select s;
             foreach (var m in myLinq5) Console.WriteLine(m.Name);
             Console.WriteLine("I guess the sorting doesn't matter since there's only one, though!");
-
         }
 
     }
